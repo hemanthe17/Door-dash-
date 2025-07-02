@@ -1,0 +1,22 @@
+# Load necessary libraries
+library(ggplot2)
+library(readxl)
+
+
+# Assuming 'dataset' is your data frame within Power BI that holds the imported Excel data
+# You might need to clean or prepare your data before plotting
+
+dataset <- read_excel("Data_Train.xlsx", sheet = 1)
+
+
+# Convert Average_Cost to numeric, removing the dollar sign
+dataset$Average_Cost <- as.numeric(gsub("\\$", "", dataset$Average_Cost))
+
+# Create a simple bar plot with ggplot2
+ggplot(dataset, aes(x = Location, y = Average_Cost, fill = Location)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Average Cost by Location",
+       x = "Location",
+       y = "Average Cost") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) # Rotate x labels for readability
